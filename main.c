@@ -2,14 +2,7 @@
 #include <string.h>
 #include <time.h>
 
-void
-show_help()
-{
-  printf("Notes Management\n");
-  printf("-h\t Show this message\n");
-  printf("list\t List stored notes\n");
-  printf("show [title]\t Show note with given title\n");
-}
+#define MAX_INDEX_ROWS 100
 
 struct PageEntry
 {
@@ -17,6 +10,30 @@ struct PageEntry
   char *title, *description;
 };
 
+struct PageEntry index_entries[MAX_INDEX_ROWS];
+
+void
+show_help()
+{
+  printf("Notes Management\n");
+  printf("-h\t Show this message\n");
+  printf("list\t List stored notes\n");
+  printf("show [title]\t Show note with given title\n");
+  printf("write [title] [text]\t Write a note with given title\n");
+}
+
+void
+show_note(int argc, char** argv)
+{
+  printf("Show_note!\n");
+}
+
+void
+print_index(int len)
+{
+  for (int i = 0; i < len; i++) {
+  }
+}
 void
 show_list()
 {
