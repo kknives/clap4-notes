@@ -45,7 +45,7 @@ show_list()
                      &index_entries[i].title,
                      &index_entries[i].description);
   }
-
+  // TODO: Implement remaining
   printf("Show_list!\n");
 }
 int
