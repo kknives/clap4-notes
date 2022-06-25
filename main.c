@@ -23,13 +23,15 @@ show_list()
 int
 main(int argc, char** argv)
 {
-  if (argc < 3) {
+  if (argc < 2) {
     show_help();
     return 0;
-  } else if (strcmp(argv[3], "list") == 0) {
+  } else if (strcmp(argv[1], "list") == 0) {
     show_list();
-  } else if (strcmp(argv[3], "show") == 0) {
+  } else if (strcmp(argv[1], "show") == 0) {
     show_note(argc, argv);
+  } else if (strcmp(argv[1], "write") == 0) {
+    write_note(argc, argv);
   } else {
     show_help();
   }
