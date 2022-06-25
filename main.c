@@ -19,7 +19,18 @@ struct PageEntry
 
 void
 show_list()
-{}
+{
+  FILE* index_file = fopen(".index", "r");
+  for (int i = 0; i < MAX_INDEX_ROWS; i++) {
+    int off = fscanf(index_file,
+                     "%ld %ms %ms",
+                     &index_entries[i].created_at,
+                     &index_entries[i].title,
+                     &index_entries[i].description);
+  }
+
+  printf("Show_list!\n");
+}
 int
 main(int argc, char** argv)
 {
