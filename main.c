@@ -34,14 +34,17 @@ show_help()
 void
 show_note(int argc, char** argv)
 {
+  for(int i=0;i<index_len;i++){
+    if(strcmp(index_entries[i].title,argv[2])==0){
+      printf("%s\n\n%s",index_entries[i].title,index_entries[i].description);
+    }
+  }
   printf("Show_note!\n");
 }
 
 void
-print_index(int len)
+print_index()
 {
-  for (int i = 0; i < len; i++) {
-  }
 }
 void
 show_list()
