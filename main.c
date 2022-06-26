@@ -12,6 +12,7 @@ struct PageEntry
 };
 
 struct PageEntry index_entries[MAX_INDEX_ROWS];
+int index_len = -1;
 
 void
 err_die(const char* msg)
@@ -50,7 +51,8 @@ show_list()
     perror("Could not open index file");
     exit(1);
   }
-  for (int i = 0; i < MAX_INDEX_ROWS; i++) {
+  int i;
+  for (i = 0; i < MAX_INDEX_ROWS; i++) {
     int off = fscanf(index_file,
                      "%ld %ms %ms",
                      &index_entries[i].created_at,
@@ -62,7 +64,9 @@ show_list()
       exit(1);
     }
   }
+  index_len = i + 1;
 
+  print_index();
   printf("Show_list!\n");
 }
 
