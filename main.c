@@ -38,9 +38,13 @@ show_note(int argc, char** argv)
 }
 
 void
-print_index(int len)
+print_index()
 {
-  for (int i = 0; i < len; i++) {
+  for (int i = 0; i < index_len; i++) {
+    printf("%10s %20s %50s\n",
+           ctime(&index_entries[i].created_at),
+           index_entries[i].title,
+           index_entries[i].description);
   }
 }
 void
