@@ -48,7 +48,7 @@ print_index()
   }
 }
 void
-show_list()
+parse_index()
 {
   FILE* index_file = fopen(".index", "r");
   if (index_file == NULL) {
@@ -69,9 +69,12 @@ show_list()
     }
   }
   index_len = i + 1;
-
+}
+void
+show_list()
+{
+  parse_index();
   print_index();
-  printf("Show_list!\n");
 }
 
 void
