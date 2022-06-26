@@ -73,6 +73,13 @@ show_list()
 void
 write_note(int argc, char** argv)
 {
+  FILE* index_file = fopen(".index", "a");
+  struct PageEntry new_entry;
+  new_entry.title=argv[2];
+  new_entry.description=argv[3];
+  new_entry.created_at=time(NULL);
+  fprintf(index_file,"%ld %s %s\n",new_entry.created_at,new_entry.title,new_entry.description);
+  fclose(index_file);
   printf("Write_note!\n");
 }
 int
