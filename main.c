@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
@@ -11,6 +12,13 @@ struct PageEntry
 };
 
 struct PageEntry index_entries[MAX_INDEX_ROWS];
+
+void
+err_die(const char* msg)
+{
+  fprintf(stderr, "%s\n", msg);
+  exit(1);
+}
 
 void
 show_help()
@@ -38,15 +46,30 @@ void
 show_list()
 {
   FILE* index_file = fopen(".index", "r");
+  if (index_file == NULL) {
+    perror("Could not open index file");
+    exit(1);
+  }
   for (int i = 0; i < MAX_INDEX_ROWS; i++) {
     int off = fscanf(index_file,
                      "%ld %ms %ms",
                      &index_entries[i].created_at,
                      &index_entries[i].title,
                      &index_entries[i].description);
+    if (off == EOF) {
+      perror("Malformed index file");
+      fclose(index_file);
+      exit(1);
+    }
   }
 
   printf("Show_list!\n");
+}
+
+void
+write_note(int argc, char** argv)
+{
+  printf("Write_note!\n");
 }
 int
 main(int argc, char** argv)
