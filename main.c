@@ -61,19 +61,28 @@ parse_index()
     exit(1);
   }
   int i;
+  size_t zero = 0;
+  ssize_t nread;
+  char* line;
   for (i = 0; i < MAX_INDEX_ROWS; i++) {
-    int off = fscanf(index_file,
-                     "%ld %ms %ms",
-                     &index_entries[i].created_at,
-                     &index_entries[i].title,
-                     &index_entries[i].description);
-    if (off == EOF) {
-      perror("Malformed index file");
-      fclose(index_file);
+    line = NULL;
+    if (fscanf(index_file, "%ld\n", &index_entries[i].created_at) == EOF) {
+      break;
+    }
+    if ((nread = getline(&line, &zero, index_file)) != -1) {
+      index_entries[i].title = line;
+    } else {
+      perror("Error parsing index file");
       exit(1);
     }
+    line = NULL;
+    if ((nread = getline(&line, &zero, index_file)) != -1) {
+      index_entries[i].description = line;
+    } else {
+      break;
+    }
   }
-  index_len = i + 1;
+  index_len = i;
 }
 void
 show_list()
@@ -91,7 +100,7 @@ write_note(int argc, char** argv)
   new_entry.description = argv[3];
   new_entry.created_at = time(NULL);
   fprintf(index_file,
-          "%ld %s %s\n",
+          "%ld\n%s\n%s\n",
           new_entry.created_at,
           new_entry.title,
           new_entry.description);
