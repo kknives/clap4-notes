@@ -34,9 +34,9 @@ show_help()
 void
 show_note(int argc, char** argv)
 {
-  for(int i=0;i<index_len;i++){
-    if(strcmp(index_entries[i].title,argv[2])==0){
-      printf("%s\n\n%s",index_entries[i].title,index_entries[i].description);
+  for (int i = 0; i < index_len; i++) {
+    if (strcmp(index_entries[i].title, argv[2]) == 0) {
+      printf("%s\n\n%s", index_entries[i].title, index_entries[i].description);
     }
   }
   printf("Show_note!\n");
@@ -45,9 +45,15 @@ show_note(int argc, char** argv)
 void
 print_index()
 {
+  for (int i = 0; i < index_len; i++) {
+    printf("%10s %20s %50s\n",
+           ctime(&index_entries[i].created_at),
+           index_entries[i].title,
+           index_entries[i].description);
+  }
 }
 void
-show_list()
+parse_index()
 {
   FILE* index_file = fopen(".index", "r");
   if (index_file == NULL) {
@@ -68,9 +74,12 @@ show_list()
     }
   }
   index_len = i + 1;
-
+}
+void
+show_list()
+{
+  parse_index();
   print_index();
-  printf("Show_list!\n");
 }
 
 void
@@ -78,10 +87,14 @@ write_note(int argc, char** argv)
 {
   FILE* index_file = fopen(".index", "a");
   struct PageEntry new_entry;
-  new_entry.title=argv[2];
-  new_entry.description=argv[3];
-  new_entry.created_at=time(NULL);
-  fprintf(index_file,"%ld %s %s\n",new_entry.created_at,new_entry.title,new_entry.description);
+  new_entry.title = argv[2];
+  new_entry.description = argv[3];
+  new_entry.created_at = time(NULL);
+  fprintf(index_file,
+          "%ld %s %s\n",
+          new_entry.created_at,
+          new_entry.title,
+          new_entry.description);
   fclose(index_file);
   printf("Write_note!\n");
 }
